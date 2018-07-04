@@ -1,4 +1,4 @@
-function getUserForHtml() {
+function getEffectiveUserEM() {
   //Put user email into html when it loads for determining whether user is the authorized user
   return Session.getEffectiveUser().getEmail();
 }
