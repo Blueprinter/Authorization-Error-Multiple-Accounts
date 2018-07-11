@@ -6,7 +6,7 @@
   </head>
 
   <body>
-
+    <div id="messageToUser"></div>
   <header>
 
   </header> 
@@ -17,7 +17,7 @@
   <input id="idAccountOfEffectiveUsr" type="text" style="display:none" <?!= getEffectiveUserEM() ?>/>
   
   <script language="javascript">
-    //cl('it ran on load 42')
+    //console.log('it ran on load')
     
     window.onload = function() {
       google.script.run
@@ -26,13 +26,13 @@
     };
 
     window.failedAcctTest = function(rtrn) {
-      var usrWhoLoaded = zq('txt','idAccountOfEffectiveUsr');
+      var usrWhoLoaded = document.getElementById('idAccountOfEffectiveUsr').textContent;
       
       if (usrWhoLoaded !== rtrn) {
-        showErrMsg('The Add-on loaded under the account: \n\n' + usrWhoLoaded + '\n\nBut you are also logged into ' + 
+        document.getElementById('messageToUser').textContent = 'The Add-on loaded under the account: \n\n' + usrWhoLoaded + '\n\nBut you are also logged into ' + 
         'account: ' + rtrn + "\n\nYou are logged into multiple accounts which has caused an authorization error. \n\n" +
         "You must either log out of all accounts, and log back into the account that installed the add-on; or open " +
-        "an incognito window, log in and use the add-on from that window");
+        "an incognito window, log in and use the add-on from that window";
       }
     }
 
