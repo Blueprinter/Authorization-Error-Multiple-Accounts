@@ -8,3 +8,30 @@ Run a scriptlet when the dialog or sidebar loads, and put the user account email
 What you need to do in order to test the code, is to log into the wrong account first. So, log into an account, any Google account, that did NOT install the add-on or web app. Then log into the account that DID install the add-on / web app.
 
 The email in the HTML tag should be an email of the default account. The default account is the account that you logged in to first.  Note the email being put into the HTML tag.  That email should be the email of the default account.
+
+Also see the post at the Apps Script Community at the following link:
+
+[https://plus.google.com/u/0/107059691808080643296/posts/FSvVypxC3PX?cfem=1](https://plus.google.com/u/0/107059691808080643296/posts/FSvVypxC3PX?cfem=1)
+
+    <input id="idAccountOfEffectiveUsr" type="hidden" style="display:none" value="<?!= Session.getEffectiveUser().getEmail(); ?>"/>
+
+    <script language="javascript">
+      //console.log('it ran on load')
+
+      window.onload = function() {
+        google.script.run
+          .withFailureHandler(failedAcctTest)
+          .getEffectiveUserEM();
+      };
+
+      window.failedAcctTest = function(rtrn) {
+        var usrWhoLoaded = document.getElementById('idAccountOfEffectiveUsr').value;
+    
+        if (usrWhoLoaded !== rtrn) {
+          showError('The Add-on loaded under the account: \n\n' + usrWhoLoaded + '\n\nBut you are also logged into ' +
+          'account: ' + rtrn + "\n\nYou are logged into multiple accounts which has caused an authorization error. \n\n" +
+          "You must either log out of all accounts, and log back into the account that installed the add-on; or open " +
+          "an incognito window, log in and use the add-on from that window");
+        }
+      }
+    </script>
