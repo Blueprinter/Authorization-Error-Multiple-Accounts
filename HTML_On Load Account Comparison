@@ -15,8 +15,8 @@
        You must evaluate this HTML as a Template in order for it to work -->
   <!-- The input tag below is hidden and has the value which is the effective user account -->
   
-  <input id="idAccountOfEffectiveUsr" type="hidden" style="display:none" value="<?!= Session.getEffectiveUser().getEmail(); ?>"/>
-    
+  <input id="idAccountOfEffectiveUsr" type="text" style="display:none" value="<?!= Session.getEffectiveUser().getEmail(); ?>"/>
+ 
   <script language="javascript">
     
     window.onload = function() {
