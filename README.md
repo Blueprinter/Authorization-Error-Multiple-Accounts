@@ -15,23 +15,24 @@ Also see the post at the Apps Script Community at the following link:
 
     <input id="idAccountOfEffectiveUsr" type="hidden" style="display:none" value="<?!= Session.getEffectiveUser().getEmail(); ?>"/>
 
-    <script language="javascript">
-      //console.log('it ran on load')
 
-      window.onload = function() {
-        google.script.run
-          .withFailureHandler(failedAcctTest)
-          .getEffectiveUserEM();
-      };
+    <script>
+      window.failedAcctTest = function() {
+      //This MUST be ABOVE the withFailureHandler because there is no onload function and the code runs as
+      //before everything is loaded
+      var usrWhoLoaded = document.getElementById('idAccountOfEffectiveUsr').textContent;
+  
+      showError('The Add-on loaded under the account: \n\n' + usrWhoLoaded + '\n\nIf are also logged into ' + 
+        'another account, this may have caused an error loading the sidebar. \n\n' +
+        "You must either log out of all accounts, and log back into the account that installed the add-on; or open " +
+        "an incognito window, log in and use the add-on from that window");
+    }
 
-      window.failedAcctTest = function(rtrn) {
-        var usrWhoLoaded = document.getElementById('idAccountOfEffectiveUsr').value;
     
-        if (usrWhoLoaded !== rtrn) {
-          showError('The Add-on loaded under the account: \n\n' + usrWhoLoaded + '\n\nBut you are also logged into ' +
-          'account: ' + rtrn + "\n\nYou are logged into multiple accounts which has caused an authorization error. \n\n" +
-          "You must either log out of all accounts, and log back into the account that installed the add-on; or open " +
-          "an incognito window, log in and use the add-on from that window");
-        }
-      }
+    google.script.run
+      .withFailureHandler(failedAcctTest)
+      .getEffectiveUserEM();
+    
+    
     </script>
+
